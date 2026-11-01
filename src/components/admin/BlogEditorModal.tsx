@@ -268,6 +268,7 @@ async def process_batch(records):
           author_id: 'muneer-data-ai-architect',
           created_at: initialBlog?.created_at || new Date().toISOString(),
           updated_at: new Date().toISOString(),
+          reading_time: '5 min read', // <-- Yeh line add kar dein
         };
         await new Promise((resolve) => setTimeout(resolve, 600));
         onSaved(simulated);
