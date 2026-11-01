@@ -6,18 +6,9 @@
  * Root Layout for Next.js 15 App Router
  */
 
+import type { Metadata } from 'next';
 import React from 'react';
 import '@/src/index.css';
-
-export interface Metadata {
-  title: string;
-  description: string;
-  openGraph?: {
-    title: string;
-    description: string;
-    type: string;
-  };
-}
 
 export const metadata: Metadata = {
   title: 'OHDrug.com — A product of MuneerDataAI',
@@ -38,7 +29,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark scroll-smooth">
-      <body className="bg-[#090d16] text-slate-100 antialiased min-h-screen">
+      <body className="bg-[#090d16] text-slate-100 antialiased min-h-screen font-sans selection:bg-blue-600 selection:text-white">
         {children}
       </body>
     </html>

@@ -10,6 +10,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { DisclaimerBanner } from '@/src/components/layout/DisclaimerBanner';
 import { Navbar } from '@/src/components/layout/Navbar';
 import { EditorialNewsroom } from '@/src/components/blog/EditorialNewsroom';
@@ -25,6 +26,7 @@ interface HomePageProps {
 }
 
 export default function HomePage({ onNavigate }: HomePageProps) {
+  const router = useRouter();
   const [articles, setArticles] = useState<EditorialArticle[]>(INITIAL_EDITORIAL_ARTICLES);
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<string>('B2B Healthcare Data Extraction');
@@ -70,18 +72,14 @@ export default function HomePage({ onNavigate }: HomePageProps) {
   const handleNavigate = (path: string) => {
     if (onNavigate) {
       onNavigate(path);
-    } else if (typeof window !== 'undefined') {
-      window.location.href = path;
+    } else {
+      router.push(path);
     }
   };
 
   const handleSelectArticle = (slug: string) => {
     handleNavigate(`/blog/${slug}`);
   };
-
-  const featured = articles[0] || INITIAL_EDITORIAL_ARTICLES[0];
-  const trending =
-    articles.slice(1, 4).length > 0 ? articles.slice(1, 4) : INITIAL_EDITORIAL_ARTICLES.slice(1, 4);
 
   return (
     <div className="min-h-screen bg-[#090d16] text-slate-100 flex flex-col font-sans selection:bg-blue-600 selection:text-white">
