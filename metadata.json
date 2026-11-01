@@ -1,0 +1,6 @@
+{
+  "name": "OHDrug.com — A product of MuneerDataAI",
+  "description": "Executive portfolio and B2B SaaS platform for Registered Pharmacist & Automation Architect (Muneer), delivering clinical data pipelines, healthcare automation, and research analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
