@@ -14,11 +14,11 @@ export type ColumnCategory =
   | 'Data Analytics'
   | 'MedTech News';
 
-export interface EditorialArticle extends Blog {
+export interface EditorialArticle extends Omit<Blog, 'reading_time'> {
   readingTimeMinutes: number;
   trendingRank?: number;
   directAnswerSummary: string;
-  reading_time?: string; // <-- Added to satisfy database schema and type checking
+  reading_time?: string;
 }
 
 export const INITIAL_EDITORIAL_ARTICLES: EditorialArticle[] = [
