@@ -1,9 +1,8 @@
-import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export async function POST(req: Request) {
+export async function POST(req) {
   try {
     const lead = await req.json();
 
@@ -25,9 +24,9 @@ export async function POST(req: Request) {
       `,
     });
 
-    return NextResponse.json({ success: true, data });
-  } catch (error: any) {
+    return Response.json({ success: true, data });
+  } catch (error) {
     console.error('Resend Server Dispatch Error:', error);
-    return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
+    return Response.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
   }
 }
