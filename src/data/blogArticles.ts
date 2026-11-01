@@ -21,7 +21,7 @@ export interface EditorialArticle extends Omit<Blog, 'reading_time'> {
   reading_time?: string;
 }
 
-export const INITIAL_EDITORIAL_ARTICLES: EditorialArticle[] = [
+export const INITIAL_EDITORIAL_ARTICLES: Blog[] = [
   {
     id: 'art-001-who-eml-intelligence',
     title: 'Global Pharmaceutical Intelligence: Ingesting WHO Essential Medicines Lists (EML) with Distributed Scrapers',
@@ -88,7 +88,7 @@ In the embedded technical walkthrough above, we demonstrate how our automated sc
     published: true,
     is_published: true,
     author_id: 'muneer-data-ai-architect',
-    readingTimeMinutes: 7,
+    reading_time: '7 min read',
     trendingRank: 1,
     created_at: '2026-10-30T10:00:00Z',
     updated_at: '2026-10-30T16:00:00Z',
@@ -141,7 +141,7 @@ def compute_price_parity_index(df_transactions: pd.DataFrame):
     published: true,
     is_published: true,
     author_id: 'muneer-data-ai-architect',
-    readingTimeMinutes: 6,
+    reading_time: '6 min read',
     trendingRank: 2,
     created_at: '2026-10-28T14:30:00Z',
     updated_at: '2026-10-29T11:00:00Z',
@@ -200,7 +200,7 @@ Across 12 months of operational deployment:
     published: true,
     is_published: true,
     author_id: 'muneer-data-ai-architect',
-    readingTimeMinutes: 8,
+    reading_time: '8 min read',
     trendingRank: 3,
     created_at: '2026-10-27T09:15:00Z',
     updated_at: '2026-10-29T10:00:00Z',
@@ -252,7 +252,7 @@ By embedding these formulas into Next.js 15 client forms with zero external trac
     published: true,
     is_published: true,
     author_id: 'muneer-data-ai-architect',
-    readingTimeMinutes: 5,
+    reading_time: '5 min read',
     created_at: '2026-10-25T11:00:00Z',
     updated_at: '2026-10-28T09:00:00Z',
   },
@@ -294,7 +294,7 @@ ORDER BY region_code ASC;
     published: true,
     is_published: true,
     author_id: 'muneer-data-ai-architect',
-    readingTimeMinutes: 6,
+    reading_time: '6 min read',
     created_at: '2026-10-23T15:20:00Z',
     updated_at: '2026-10-27T10:00:00Z',
   },
@@ -330,7 +330,7 @@ Clinical AI models must always be paired with deterministic pharmacist sign-off 
     published: true,
     is_published: true,
     author_id: 'muneer-data-ai-architect',
-    readingTimeMinutes: 7,
+    reading_time: '7 min read',
     created_at: '2026-10-21T08:45:00Z',
     updated_at: '2026-10-26T12:00:00Z',
   },

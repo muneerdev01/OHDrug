@@ -19,6 +19,7 @@ import { AboutPharmacistSection } from '@/src/components/home/AboutPharmacistSec
 import { LeadCaptureModal } from '@/src/components/home/LeadCaptureModal';
 import { Footer } from '@/src/components/layout/Footer';
 import { INITIAL_EDITORIAL_ARTICLES, type EditorialArticle } from '@/src/data/blogArticles';
+import type { Blog } from '@/src/types/database';
 import { supabase, isSupabaseConfigured } from '@/src/lib/supabase/client';
 
 interface HomePageProps {
@@ -27,7 +28,14 @@ interface HomePageProps {
 
 export default function HomePage({ onNavigate }: HomePageProps) {
   const router = useRouter();
-  const [articles, setArticles] = useState<EditorialArticle[]>(INITIAL_EDITORIAL_ARTICLES);
+  const [articles, setArticles] = useState<EditorialArticle[]>(() => {
+    // Convert Blog[] to EditorialArticle[]
+    return INITIAL_EDITORIAL_ARTICLES.map((blog) => ({
+      ...blog,
+      readingTimeMinutes: parseReadingTime(blog.reading_time),
+      directAnswerSummary: blog.excerpt || blog.title,
+    }));
+  });
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<string>('B2B Healthcare Data Extraction');
 
@@ -42,9 +50,9 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           .order('created_at', { ascending: false });
 
         if (!error && Array.isArray(data) && data.length > 0) {
-          const merged: EditorialArticle[] = data.map((blog: any, idx: number) => ({
+          const merged: EditorialArticle[] = data.map((blog: Blog, idx: number) => ({
             ...blog,
-            readingTimeMinutes: Math.max(4, Math.round((blog.content?.length || 1000) / 400)),
+            readingTimeMinutes: parseReadingTime(blog.reading_time),
             trendingRank: idx < 3 ? idx + 1 : undefined,
             directAnswerSummary: blog.excerpt || blog.title,
           }));
@@ -57,6 +65,12 @@ export default function HomePage({ onNavigate }: HomePageProps) {
 
     loadPublishedBlogs();
   }, []);
+
+  function parseReadingTime(readingTime: string | null): number {
+    if (!readingTime) return 5;
+    const match = readingTime.match(/(\d+)/);
+    return match ? parseInt(match[1], 10) : 5;
+  }
 
   const handleOpenConsultation = (service?: string) => {
     if (service) {

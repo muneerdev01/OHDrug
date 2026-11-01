@@ -40,10 +40,12 @@ export interface Blog {
   updated_at?: string;
   tags?: string[];
   author_id?: string;
+  directAnswerSummary?: string;
+  trendingRank?: number;
 }
 
-export type BlogCreate = Omit<Blog, 'id' | 'created_at'>;
-export type BlogUpdate = Partial<Omit<Blog, 'id' | 'created_at'>>;
+export type BlogCreate = Omit<Blog, 'id' | 'created_at' | 'updated_at'>;
+export type BlogUpdate = Partial<Blog>;
 
 export interface BlogListResponse {
   blogs: Blog[];

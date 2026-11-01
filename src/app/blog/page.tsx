@@ -15,6 +15,7 @@ import { EditorialNewsroom } from '@/src/components/blog/EditorialNewsroom';
 import { Footer } from '@/src/components/layout/Footer';
 import { LeadCaptureModal } from '@/src/components/home/LeadCaptureModal';
 import { INITIAL_EDITORIAL_ARTICLES, type EditorialArticle } from '@/src/data/blogArticles';
+import type { Blog } from '@/src/types/database';
 import { supabase, isSupabaseConfigured } from '@/src/lib/supabase/client';
 
 interface BlogPageProps {
@@ -22,7 +23,14 @@ interface BlogPageProps {
 }
 
 export default function BlogListingPage({ onNavigate }: BlogPageProps) {
-  const [articles, setArticles] = useState<EditorialArticle[]>(INITIAL_EDITORIAL_ARTICLES);
+  const [articles, setArticles] = useState<EditorialArticle[]>(() => {
+    // Convert Blog[] to EditorialArticle[]
+    return INITIAL_EDITORIAL_ARTICLES.map((blog) => ({
+      ...blog,
+      readingTimeMinutes: parseReadingTime(blog.reading_time),
+      directAnswerSummary: blog.excerpt || blog.title,
+    }));
+  });
   const [isConsultModalOpen, setIsConsultModalOpen] = useState(false);
 
   // Fetch published articles from Supabase 'blogs' table if connected
@@ -37,9 +45,9 @@ export default function BlogListingPage({ onNavigate }: BlogPageProps) {
 
         if (!error && Array.isArray(data) && data.length > 0) {
           // Merge with editorial reading times and fallbacks
-          const merged: EditorialArticle[] = data.map((blog: any, idx: number) => ({
+          const merged: EditorialArticle[] = data.map((blog: Blog, idx: number) => ({
             ...blog,
-            readingTimeMinutes: Math.max(4, Math.round((blog.content?.length || 1000) / 400)),
+            readingTimeMinutes: parseReadingTime(blog.reading_time),
             trendingRank: idx < 3 ? idx + 1 : undefined,
             directAnswerSummary: blog.excerpt || blog.title,
           }));
@@ -52,6 +60,12 @@ export default function BlogListingPage({ onNavigate }: BlogPageProps) {
 
     loadPublishedBlogs();
   }, []);
+
+  function parseReadingTime(readingTime: string | null): number {
+    if (!readingTime) return 5;
+    const match = readingTime.match(/(\d+)/);
+    return match ? parseInt(match[1], 10) : 5;
+  }
 
   const handleSelectArticle = (slug: string) => {
     if (onNavigate) {
