@@ -18,6 +18,7 @@ export interface EditorialArticle extends Blog {
   readingTimeMinutes: number;
   trendingRank?: number;
   directAnswerSummary: string;
+  reading_time?: string; // <-- Added to satisfy database schema and type checking
 }
 
 export const INITIAL_EDITORIAL_ARTICLES: EditorialArticle[] = [
